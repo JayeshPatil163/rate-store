@@ -40,17 +40,17 @@ const AnimatedSpiral = () => {
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
   const iconPositions = [
-    { top: '30%', left: '60%' },
-    { top: '80%', left: '75%' },
-    { top: '50%', left: '17%' },
+    { top: '31%', left: '59%' },
+    { top: '75%', left: '75%' },
+    { top: '50%', left: '20%' },
     { top: '3%', left: '25%' },
   ];
 
   const featurePositions = [
-    { top: '85%', left: '22%' },
-    { top: '65%', left: '76%' },
+    { top: '85%', left: '25%' },
+    { top: '65%', left: '74%' },
     { top: '0%', left: '50%' },
-    { top: '65%', left: '35%' },
+    { top: '65%', left: '37%' },
   ];
 
   return (

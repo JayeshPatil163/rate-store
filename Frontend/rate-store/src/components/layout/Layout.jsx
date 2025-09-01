@@ -2,7 +2,7 @@ import React, { useState, cloneElement } from 'react';
 import Navbar from './Navbar';
 import Modal from '../Modal';
 import { loginUser, registerUser } from '../../services/apiService';
-import { useAuth } from '../../context/AuthContext.jsx';
+import {  useAuth } from '../../context/AuthContext';
 
 const LoginModal = ({ isOpen, onClose, onLogin }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -31,7 +31,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
                 <input name="email" type="email" placeholder="Email" onChange={handleChange} required className="bg-black/20 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/50" />
                 <input name="password" type="password" placeholder="Password (8-16 chars, 1 uppercase, 1 special)" onChange={handleChange} required className="bg-black/20 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/50" />
                 <textarea name="address" placeholder="Address (max 400 chars)" onChange={handleChange} className="bg-black/20 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 h-24 resize-none"></textarea>
-                <button type="submit" className="bg-white text-black font-bold py-3 rounded-lg hover:opacity-80 transition mt-2">Register</button>
+                <button type="submit" className="bg-white text-black font-bold py-3 rounded-lg hover:opacity-80 transition mt-2">Sign Up</button>
             </form>
         </Modal>
     );
@@ -41,7 +41,7 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
 const Layout = ({ children }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const { login } = useAuth();
+  const { user, login, logout } = useAuth();
 
   const handleLogin = async (credentials) => {
     try {
@@ -64,14 +64,15 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-3 md:p-6">
+    <div className="min-h-screen flex flex-col items-center py-6 px-1">
       <Navbar
+        user={user}
+        logout={logout}
         onLoginClick={() => setIsLoginOpen(true)}
         onRegisterClick={() => setIsRegisterOpen(true)}
       />
 
-      <main className="w-full max-w-7xl bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg p-8 md:p-12 mt-4">
-        {/* This line correctly renders the page component (like LandingPage) only ONCE. */}
+      <main className="w-full max-w-350 bg-black/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl shadow-black/20 dark:shadow-3xl p-8 md:p-12 mt-4">
         {cloneElement(children, { onRegisterClick: () => setIsRegisterOpen(true) })}
       </main>
 

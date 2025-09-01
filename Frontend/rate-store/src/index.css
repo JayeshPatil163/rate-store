@@ -6,9 +6,24 @@ html, body {
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
     background-color: #000000;
-    background-image: radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120, 119, 198, 0.3), hsla(0, 0%, 100%, 0));
     background-repeat: no-repeat;
     background-attachment: fixed;
+    transition: background-color 0.5s ease;
+    color: #f8f8f8;
+  }
+
+  body {
+    background-color: #050505;
+    background-image: linear-gradient(-45deg, #ffffff, #a199ff, #f5cefb, #ffffff);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+  }
+
+  .dark body {
+    background-color: #050505;
+    background-image: linear-gradient(-45deg, #050505, #1d1b36, #050505, #111827);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
     color: #f8f8f8;
   }
 
@@ -31,3 +46,18 @@ html, body {
     transform: translateY(0px);
   }
 }
+
+@keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-24rem * 4));
+    }
+  }
+
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
