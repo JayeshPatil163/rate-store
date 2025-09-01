@@ -1,0 +1,79 @@
+// This is your Prisma schema file.
+// It defines your database models and their relationships.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ## USER MODEL ##
+// Corresponds to your userSchema.
+model User {
+  id        String    @id @default(cuid()) // Unique ID for the user
+  name      String    // Validation for min/max length is handled in your backend code.
+  email     String    @unique // Enforces that every email in the database is unique.
+  password  String    // The hashed password will be stored here.
+  address   String?   // The '?' makes this field optional. Max length is handled in backend.
+  role      UserRole  // Uses the UserRole enum defined below for type safety.
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // --- Relations ---
+  // A User can be the owner of multiple Stores.
+  ownedStores Store[]
+  // A User can submit multiple Ratings.
+  ratings     Rating[]
+}
+
+// ## STORE MODEL ##
+// Corresponds to your storeSchema.
+model Store {
+  id                String    @id @default(cuid())
+  name              String
+  email             String    @unique // Enforces unique email for each store.
+  address           String    // Max length is handled in your backend code.
+  averageRating     Float     @default(0)
+  totalRatingsCount Int       @default(0)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // --- Relations ---
+  // Defines the one-to-many relationship with the User model.
+  storeOwnerId String
+  storeOwner   User     @relation(fields: [storeOwnerId], references: [id])
+  // A Store can have multiple Ratings from different users.
+  ratings      Rating[]
+}
+
+// ## RATING MODEL ##
+// Corresponds to your ratingSchema.
+model Rating {
+  id        String   @id @default(cuid())
+  rating    Int      // Rating value from 1 to 5. Min/max is checked in your backend code.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // --- Relations ---
+  // Defines the relationship with the User who submitted the rating.
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  // Defines the relationship with the Store that was rated.
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id])
+
+  // --- Constraints ---
+  // This compound unique index ensures a user can only submit one rating per store.
+  @@unique([userId, storeId])
+}
+
+// ## ENUM ##
+// Defines the allowed roles for a User, preventing invalid role strings.
+enum UserRole {
+  Normal_User
+  Store_Owner
+  System_Administrator
+}
