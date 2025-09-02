@@ -58,16 +58,19 @@ import { submitRating, updateRating } from '../services/apiService';
 
 const StoreCard = ({ store }) => {
   const [userRatingInfo, setUserRatingInfo] = useState(store.userSubmittedRating);
+  const [userRating, setUserRating] = useState(store.userSubmittedRating);
 
   const handleRatingSubmit = async (newRating) => {
     try {
-      if (userRatingInfo) {
+      if (userRatingInfo && userRatingInfo.id) {
         const updated = await updateRating(userRatingInfo.id, { rating: newRating });
         setUserRatingInfo(updated.data);
+        setUserRating(newRating);
         alert(`You updated your rating for ${store.name} to ${newRating} stars!`);
       } else {
-        await submitRating({ storeId: store.id, rating: newRating });
-        setUserRatingInfo(newRating);
+        const response = await submitRating({ storeId: store.id, rating: newRating });
+        setUserRatingInfo(response.data);
+        setUserRating(newRating);
         alert(`You rated ${store.name} ${newRating} stars!`);
       }
     } catch (error) {
@@ -90,7 +93,7 @@ const StoreCard = ({ store }) => {
         </div>
         <div className="text-center">
           <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Your Rating</p>
-          <StarRating rating={userRatingInfo} isEditable={true} onRate={handleRatingSubmit} />
+          <StarRating rating={userRating} isEditable={true} onRate={handleRatingSubmit} />
         </div>
       </div>
     </div>
