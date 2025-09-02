@@ -35,12 +35,13 @@ const addStore = async (req, res) => {
  * @access  Private/Normal User
  */
 const getStores = async (req, res) => {
-  const { name, address, sort = 'name', order = 'asc' } = req.query;
+  const { name, email, address, sort = 'name', order = 'asc' } = req.query;
   const userId = req.user.id;
 
   try {
     const where = {};
     if (name) where.name = { contains: name, mode: 'insensitive' };
+    if (email) where.email = { contains: email, mode: 'insensitive' };
     if (address) where.address = { contains: address, mode: 'insensitive' };
 
     const orderBy = { [sort]: order };

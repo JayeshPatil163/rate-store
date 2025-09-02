@@ -2,9 +2,9 @@ import React from 'react';
 import ThemeToggle from '../ThemeToggle';
 import logo from '../../assets/logo.png';
 
-const Navbar = ({ user, logout, onLoginClick, onRegisterClick }) => {
+const Navbar = ({ user, logout, onLoginClick, onRegisterClick, onProfileClick }) => {
   return (
-    <div className="w-full max-w-350 mx-auto bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/20 dark:shadow-3xl rounded-2xl p-4">
+    <div className="w-full max-w-350 mx-auto bg-black backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/20 dark:shadow-3xl rounded-2xl p-4">
       <nav className="flex justify-between items-center">
         <img 
           src={logo} 
@@ -14,6 +14,7 @@ const Navbar = ({ user, logout, onLoginClick, onRegisterClick }) => {
         <div className="hidden md:flex gap-8 text-black dark:text-gray-300 absolute left-1/2 -translate-x-1/2">
           <a href="#" className="hover:text-white dark:text-gray-300 transition-colors">Stores</a>
           <a href="#" className="hover:text-white dark:text-gray-300 transition-colors">About</a>
+          <a onClick={onProfileClick} className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">Profile</a>
           <a href="#" className="hover:text-white dark:text-gray-300 transition-colors">Contact</a>
         </div>
         <div className="flex items-center gap-10">

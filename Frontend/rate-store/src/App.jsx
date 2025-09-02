@@ -5,14 +5,20 @@ import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import Layout from './components/layout/Layout.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import StoreListPage from './pages/StoreListPage.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import StoreOwnerDashboard from './pages/StoreOwnerDashboard.jsx';
 
 function AppContent() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      navigate('/stores');
+    if (user?.role === 'System_Administrator') {
+      navigate('/admin');
+    } else if (user?.role === 'Normal_User') {
+      navigate('/normal-user');
+    } else if (user?.role === 'Store_Owner') {
+      navigate('/store');
     } else {
       navigate('/');
     }
@@ -28,8 +34,32 @@ function AppContent() {
           </Layout>
         }
       />
+      <Route 
+        path="/store" 
+        element={
+          user ? (
+            <Layout>
+              <StoreOwnerDashboard />
+            </Layout>
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
       <Route
-        path="/stores"
+        path="/admin"
+        element={
+          user ? (
+            <Layout>
+              <AdminDashboard />
+            </Layout>
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
+      <Route
+        path="/normal-user"
         element={
           user ? (
             <Layout>

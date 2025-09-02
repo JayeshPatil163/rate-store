@@ -9,7 +9,7 @@ const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.post('/', protect, authorize('System_Administrator'), addStore);
 
-router.get('/', protect, authorize('Normal_User'), getStores);
+router.get('/', protect, authorize('Normal_User', 'System_Administrator'), getStores);
 
 router.get('/my-dashboard', protect, authorize('Store_Owner'), getStoreOwnerDashboard);
 

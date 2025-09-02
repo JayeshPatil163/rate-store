@@ -57,9 +57,9 @@ const AnimatedSpiral = () => {
     <div className="relative w-full h-[450px] flex items-center justify-center">
       <div className="absolute w-full h-full">
         <svg width="100%" height="100%" viewBox="0 0 500 500">
-          <ellipse cx="250" cy="250" rx="250" ry="250" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
-          <ellipse cx="250" cy="250" rx="180" ry="180" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
-          <ellipse cx="250" cy="250" rx="120" ry="120" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
+          <ellipse cx="250" cy="250" rx="250" ry="250" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="1"/>
+          <ellipse cx="250" cy="250" rx="180" ry="180" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="1"/>
+          <ellipse cx="250" cy="250" rx="120" ry="120" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="1"/>
         </svg>
       </div>
 

@@ -62,3 +62,7 @@ export const submitRating = (ratingData) => {
 export const updateRating = (ratingId, ratingData) => {
   return apiClient.put(`/ratings/${ratingId}`, ratingData);
 };
+
+export const getDashboardStats = () => {
+  return apiClient.get('/admin/stats');
+};
